@@ -1,17 +1,21 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof (GUITexture))]
+
 public class ForcedReset : MonoBehaviour
 {
+    public Image resetImage; // GUITexture 대신 UI.Image로 대체
+
     private void Update()
     {
-        // if we have forced a reset ...
-        if (CrossPlatformInputManager.GetButtonDown("ResetObject"))
+        // "ResetObject" 버튼이 눌리면
+        if (Input.GetButtonDown("ResetObject")) // CrossPlatformInputManager를 대체
         {
-            //... reload the scene
-            Application.LoadLevelAsync(Application.loadedLevelName);
+            // 현재 씬을 비동기로 다시 로드
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
         }
     }
 }
