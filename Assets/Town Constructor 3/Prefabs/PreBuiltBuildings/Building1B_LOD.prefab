@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013417321710}
   - component: {fileID: 205000011576935246}
-  - component: {fileID: 65000012699496972}
   m_Layer: 0
   m_Name: Building1B_LOD
   m_TagString: Untagged
@@ -206,27 +205,6 @@ LODGroup:
     - renderer: {fileID: 23000011396432946}
     - renderer: {fileID: 23000013305702464}
   m_Enabled: 1
---- !u!65 &65000012699496972
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000010010255368}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 8.127234, y: 26.24313, z: 16.153002}
-  m_Center: {x: -3.9174252, y: 12.621565, z: 7.930258}
 --- !u!1 &1000010034960684
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,6 +1957,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4000011997928082}
+  - component: {fileID: 4026528740936207781}
   m_Layer: 0
   m_Name: Building1B_High
   m_TagString: Untagged
@@ -1994,7 +1973,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000010653096452}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000015454305, y: 0.70710707, z: 0.000000015454315, w: 0.70710653}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2062,7 +2041,28 @@ Transform:
   - {fileID: 4000011372161472}
   - {fileID: 4000010315912330}
   m_Father: {fileID: 4000013417321710}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &4026528740936207781
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010653096452}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.84, y: 26.24313, z: 9}
+  m_Center: {x: -8, y: 13, z: -3.99}
 --- !u!1 &1000010697766766
 GameObject:
   m_ObjectHideFlags: 0
