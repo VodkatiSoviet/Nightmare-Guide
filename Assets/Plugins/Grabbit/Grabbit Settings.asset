@@ -69,7 +69,7 @@ MonoBehaviour:
     m_Font: {fileID: 0}
     m_FontSize: 12
     m_FontStyle: 0
-    m_Alignment: 0
+    m_Alignment: 3
     m_WordWrap: 0
     m_RichText: 1
     m_TextClipping: 1
@@ -136,7 +136,7 @@ MonoBehaviour:
     m_Font: {fileID: 0}
     m_FontSize: 15
     m_FontStyle: 0
-    m_Alignment: 0
+    m_Alignment: 3
     m_WordWrap: 1
     m_RichText: 1
     m_TextClipping: 1
@@ -203,7 +203,7 @@ MonoBehaviour:
     m_Font: {fileID: 0}
     m_FontSize: 20
     m_FontStyle: 0
-    m_Alignment: 0
+    m_Alignment: 3
     m_WordWrap: 0
     m_RichText: 1
     m_TextClipping: 1
@@ -270,7 +270,7 @@ MonoBehaviour:
     m_Font: {fileID: 0}
     m_FontSize: 40
     m_FontStyle: 0
-    m_Alignment: 0
+    m_Alignment: 3
     m_WordWrap: 0
     m_RichText: 1
     m_TextClipping: 1
@@ -822,7 +822,7 @@ MonoBehaviour:
     m_Font: {fileID: 0}
     m_FontSize: 12
     m_FontStyle: 0
-    m_Alignment: 0
+    m_Alignment: 3
     m_WordWrap: 0
     m_RichText: 1
     m_TextClipping: 1
@@ -1059,7 +1059,7 @@ MonoBehaviour:
   solverIterations: 10
   useLowQualityConvexCollidersOnSelection: 0
   UseLimitationZone: 0
-  Constraints: 90
+  Constraints: 10
   JungleLogo: {fileID: 2800000, guid: 1e021604d3033604dbbdf0af3615fbe5, type: 3}
   GetStartedArrow: {fileID: 2800000, guid: 6f19a967e55eb7a4db62b3cd08e30764, type: 3}
   Question: {fileID: 0}

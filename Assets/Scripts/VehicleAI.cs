@@ -51,30 +51,31 @@ public class VehicleAI : MonoBehaviour
     {
         if (currentNode == waypoint.Count - 1)
         {
-            // 마지막 Waypoint에 도달한 경우 첫 번째 Waypoint로 이동
             currentNode = 0;
+            agent.speed = speed; // 속도 원래대로 복구
         }
         else
         {
             // 다음 Waypoint로 이동
+            agent.destination = waypoint[currentNode].position;
             currentNode++;
         }
-
-        // NavMeshAgent의 목적지를 현재 Waypoint로 설정
-        agent.destination = waypoint[currentNode].position;
-        agent.speed = speed; // 속도 원래대로 복구
     }
-
 
     void HandleDeceleration()
     {
+        
         if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance)
         {
             // 마지막 Waypoint로 접근 시 속도 점진적으로 줄이기
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
+            Invoke("ClearPosition", 1f);//1초 뒤 차량 위치를 처음 위치로 초기화
         }
     }
-
+    public void ClearPosition()//차량 위치 초기화
+    {
+        transform.position = waypoint[0].position;
+    }
     private void OnDrawGizmos()
     {
         for (int i = 0; i < waypoint.Count; i++)
@@ -106,7 +107,7 @@ public class VehicleAI : MonoBehaviour
             agent.isStopped = true; // 차량 멈춤
             StopLine(); // 정지 애니메이션
         }
-        if (other.CompareTag("LeftPoint")|| other.CompareTag("RightPoint"))
+        if (other.CompareTag("LeftPoint")|| other.CompareTag("RightPoint")) // 바퀴가 회전할 타이밍에 애니메이션 적용 
         {
             RotationPoint(other.tag);
         }
@@ -143,12 +144,12 @@ public class VehicleAI : MonoBehaviour
     }
     public void RotationPoint(string rot)
     {
-        if (rot.Equals("Left"))
+        if (rot.Equals("LeftPoint"))
         {
             LeftRine();
             Invoke("IdleLine", 1f);
         }
-        else if(rot.Equals("Right"))
+        else if(rot.Equals("RightPoint"))
         {
             RightLine();
             Invoke("IdleLine", 1f);
