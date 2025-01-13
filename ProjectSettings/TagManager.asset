@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - RightPoint
+  - LeftPoint
   layers:
   - Default
   - TransparentFX

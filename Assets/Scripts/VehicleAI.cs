@@ -1,38 +1,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class VehicleAI : MonoBehaviour
 {
     public float speed = 10f; // 기본 속도
     public float slowSpeed = 2f; // 마지막 Waypoint로 갈 때 속도
-    public float decelerationDistance = 5f; // 속도를 줄이기 시작할 거리
+    public float decelerationDistance = 3f; // 속도를 줄이기 시작할 거리
+
 
     [Header("WayPointNav")]
     NavMeshAgent agent;
     private int currentNode = 0;
-    [SerializeField] List<Transform> waypoint = new List<Transform>();
+    [SerializeField] List<Transform> waypoint = new List<Transform>(); // 자동차가 이동할 라인
 
     [Header("WheelAnim")]
     [SerializeField] Animator[] anim_Wheel;
 
+    private bool isPlayerInRange = false; // 플레이어가 범위 안에 있는지 확인하는 플래그
+    private bool isShinho = false; // 신호등 인식
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
         agent.speed = speed; // 기본 속도 설정
+        isPlayerInRange = false;
+        isShinho = false;
         GotoNext();
     }
 
     void Update()
     {
-        HandleDeceleration();
+        if (!isPlayerInRange) // 플레이어가 범위에 없을 때만 이동
+        {
+            HandleDeceleration();
+        }
         CarAnim();
     }
 
     void FixedUpdate()
     {
-        if (!agent.pathPending && agent.remainingDistance < 2f)
+        if (!isPlayerInRange && !isShinho && !agent.pathPending && agent.remainingDistance < 2f)
         {
             GotoNext(); // 다음 Waypoint로 이동
         }
@@ -42,18 +51,20 @@ public class VehicleAI : MonoBehaviour
     {
         if (currentNode == waypoint.Count - 1)
         {
-            // 마지막 Waypoint에 도착했을 때 첫 번째 Waypoint로 강제 이동
-            transform.position = waypoint[0].position;
+            // 마지막 Waypoint에 도달한 경우 첫 번째 Waypoint로 이동
             currentNode = 0;
-            agent.speed = speed; // 속도 원래대로 복구
         }
         else
         {
             // 다음 Waypoint로 이동
-            agent.destination = waypoint[currentNode].position;
             currentNode++;
         }
+
+        // NavMeshAgent의 목적지를 현재 Waypoint로 설정
+        agent.destination = waypoint[currentNode].position;
+        agent.speed = speed; // 속도 원래대로 복구
     }
+
 
     void HandleDeceleration()
     {
@@ -87,7 +98,30 @@ public class VehicleAI : MonoBehaviour
             }
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Shinho"))
+        {
+            isPlayerInRange = true;
+            agent.isStopped = true; // 차량 멈춤
+            StopLine(); // 정지 애니메이션
+        }
+        if (other.CompareTag("LeftPoint")|| other.CompareTag("RightPoint"))
+        {
+            RotationPoint(other.tag);
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Shinho"))
+        {
+            isPlayerInRange = false;
+            agent.isStopped = false; // 차량 재시작
+            agent.speed = speed; // 기본 속도로 복구
+            IdleLine(); // 기본 애니메이션
+        }
+    }
     public void CarAnim()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -103,6 +137,23 @@ public class VehicleAI : MonoBehaviour
             IdleLine();
         }
         if (Input.GetKeyDown(KeyCode.R))
+        {
+            StopLine();
+        }
+    }
+    public void RotationPoint(string rot)
+    {
+        if (rot.Equals("Left"))
+        {
+            LeftRine();
+            Invoke("IdleLine", 1f);
+        }
+        else if(rot.Equals("Right"))
+        {
+            RightLine();
+            Invoke("IdleLine", 1f);
+        }
+        else
         {
             StopLine();
         }
@@ -147,4 +198,6 @@ public class VehicleAI : MonoBehaviour
             anim.SetBool("Stop", true);
         }
     }
+
+    
 }
