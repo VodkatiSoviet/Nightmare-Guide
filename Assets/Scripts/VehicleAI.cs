@@ -20,6 +20,8 @@ public class VehicleAI : MonoBehaviour
 
     private bool isPlayerInRange = false; // 플레이어가 범위 안에 있는지 확인하는 플래그
     private bool isShinho = false; // 신호등 인식
+
+    public bool test = false;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -28,14 +30,16 @@ public class VehicleAI : MonoBehaviour
         isPlayerInRange = false;
         isShinho = false;
         GotoNext();
+        IdleLine();
     }
 
     void Update()
     {
-        if (!isPlayerInRange) // 플레이어가 범위에 없을 때만 이동
-        {
-            HandleDeceleration();
-        }
+            if (!isPlayerInRange) // 플레이어가 범위에 없을 때만 이동
+            {
+                HandleDeceleration();
+            }
+  
         CarAnim();
     }
 
@@ -122,6 +126,7 @@ public class VehicleAI : MonoBehaviour
             agent.speed = speed; // 기본 속도로 복구
             IdleLine(); // 기본 애니메이션
         }
+        
     }
     public void CarAnim()
     {
@@ -147,12 +152,12 @@ public class VehicleAI : MonoBehaviour
         if (rot.Equals("LeftPoint"))
         {
             LeftRine();
-            Invoke("IdleLine", 1f);
+            Invoke("IdleLine", 2f);
         }
         else if(rot.Equals("RightPoint"))
         {
             RightLine();
-            Invoke("IdleLine", 1f);
+            Invoke("IdleLine", 2f);
         }
         else
         {
@@ -168,6 +173,7 @@ public class VehicleAI : MonoBehaviour
             anim.SetBool("Stop", false);
             anim.SetBool("Left", true);
         }
+        Debug.Log("좌회전중");
     }
 
     public void RightLine()
@@ -178,6 +184,7 @@ public class VehicleAI : MonoBehaviour
             anim.SetBool("Stop", false);
             anim.SetBool("Right", true);
         }
+        Debug.Log("우회전중");
     }
 
     public void IdleLine()

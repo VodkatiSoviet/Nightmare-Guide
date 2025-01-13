@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - RightPoint
   - LeftPoint
+  - Shinho
   layers:
   - Default
   - TransparentFX

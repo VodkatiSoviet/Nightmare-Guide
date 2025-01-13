@@ -1195,6 +1195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4981666998271360}
   - component: {fileID: 6388043493518821538}
+  - component: {fileID: 3816822480311028848}
   m_Layer: 8
   m_Name: Wheel_FR
   m_TagString: Untagged
@@ -1244,6 +1245,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &3816822480311028848
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271618287243308}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.34
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1290513737516388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,6 +1525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4484528274142068}
   - component: {fileID: 3587196808308371336}
+  - component: {fileID: 5523783459195785304}
   m_Layer: 8
   m_Name: Wheel_FL
   m_TagString: Untagged
@@ -1552,6 +1575,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &5523783459195785304
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350114461917086}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.34
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1368583581644466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4300469993718988}
   - component: {fileID: 8226399277252556204}
+  - component: {fileID: 2882870086331715481}
   m_Layer: 8
   m_Name: Wheel_RR
   m_TagString: Untagged
@@ -2325,6 +2370,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &2882870086331715481
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504280090962082}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.34
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1525880743761838
 GameObject:
   m_ObjectHideFlags: 0
@@ -3084,6 +3150,7 @@ GameObject:
   - component: {fileID: 7619761733778033371}
   - component: {fileID: 566327893537537596}
   - component: {fileID: 8979818170657448526}
+  - component: {fileID: 6974940671591204807}
   m_Layer: 0
   m_Name: Car 1
   m_TagString: Untagged
@@ -3101,7 +3168,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.1578019, y: 0.37485552, z: -3.36654}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4124397036704694}
@@ -3123,13 +3190,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4269b288c74baf54f9eed0a7bf3d77ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  speed: 10
+  slowSpeed: 2
+  decelerationDistance: 3
+  waypoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   anim_Wheel:
   - {fileID: 3587196808308371336}
   - {fileID: 6135058846165639529}
   - {fileID: 8226399277252556204}
   - {fileID: 6388043493518821538}
-  speed: 0
+  test: 0
 --- !u!54 &566327893537537596
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3175,10 +3260,31 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.03
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &6974940671591204807
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654648867817274}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.67, y: 1.27, z: 3.66}
+  m_Center: {x: 0, y: 0.1, z: 0.21}
 --- !u!1 &1708700505944424
 GameObject:
   m_ObjectHideFlags: 0
@@ -3438,6 +3544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4910949945621414}
   - component: {fileID: 6135058846165639529}
+  - component: {fileID: 8912988479906634271}
   m_Layer: 8
   m_Name: Wheel_RL
   m_TagString: Untagged
@@ -3487,6 +3594,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &8912988479906634271
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835201809650812}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.34
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1863806548873272
 GameObject:
   m_ObjectHideFlags: 0
