@@ -85,8 +85,8 @@ public class VehicleAI : MonoBehaviour
         for (int i = 0; i < waypoint.Count; i++)
         {
             Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
-            Gizmos.DrawSphere(waypoint[i].transform.position, 2);
-            Gizmos.DrawWireSphere(waypoint[i].transform.position, 20f);
+            //Gizmos.DrawSphere(waypoint[i].transform.position, 2);
+            //Gizmos.DrawWireSphere(waypoint[i].transform.position, 20f);
 
             if (i < waypoint.Count - 1)
             {
