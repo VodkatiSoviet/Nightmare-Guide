@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 5998101189420875569}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -557,9 +557,9 @@ MonoBehaviour:
   m_WalkSpeed: 10
   m_RunSpeed: 25
   m_RunstepLenghten: -9
-  m_JumpSpeed: 10
+  m_JumpSpeed: 25
   m_StickToGroundForce: 10
-  m_GravityMultiplier: 2
+  m_GravityMultiplier: 7
   m_MouseLook:
     XSensitivity: 2
     YSensitivity: 2
@@ -664,7 +664,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
   m_JumpSound: {fileID: 8300000, guid: 5897aeed9b676024fbb8c694b421a861, type: 3}
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 694136378683529783}
 --- !u!54 &2139007686366711640
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1403,6 +1403,7 @@ MonoBehaviour:
   postProcessingBehaviour: {fileID: 4747415434099735434}
   day_Scene: {fileID: 11400000, guid: afeeda4c8d290e844a0ef30ba081f8be, type: 2}
   night_Scene: {fileID: 11400000, guid: 641f0d14b2988f24ba36706cc0f70813, type: 2}
+  rotationDuration: 0.2
 --- !u!1 &5320919109234143622
 GameObject:
   m_ObjectHideFlags: 0
