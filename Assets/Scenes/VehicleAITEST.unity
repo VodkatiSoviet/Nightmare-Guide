@@ -3322,6 +3322,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7619761733778033371, guid: 8258fdccd226b584b8dc1c7ac1652db0, type: 3}
+      propertyPath: speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619761733778033371, guid: 8258fdccd226b584b8dc1c7ac1652db0, type: 3}
+      propertyPath: offline
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619761733778033371, guid: 8258fdccd226b584b8dc1c7ac1652db0, type: 3}
       propertyPath: waypoint.Array.data[0]
       value: 
       objectReference: {fileID: 641030452}
@@ -17666,8 +17674,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB2F9\uC2E0\uC740 \uC800\uC8FC \uBC1B\uC558\uB2E4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5721cbae37d34144899afe8430b4c53c, type: 2}
-  m_sharedMaterial: {fileID: -5439741076996900559, guid: 5721cbae37d34144899afe8430b4c53c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 59243a747b552674bb55192acc2f0705, type: 2}
+  m_sharedMaterial: {fileID: 4762509290444139574, guid: 59243a747b552674bb55192acc2f0705, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17697,7 +17705,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 40
   m_fontSizeMax: 60
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -44399,7 +44407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1990841709
 Transform:
   m_ObjectHideFlags: 0
