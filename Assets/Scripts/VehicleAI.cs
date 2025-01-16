@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class VehicleAI : MonoBehaviour
 {
@@ -9,203 +8,144 @@ public class VehicleAI : MonoBehaviour
     public float slowSpeed = 2f; // 마지막 Waypoint로 갈 때 속도
     public float decelerationDistance = 3f; // 속도를 줄이기 시작할 거리
 
-
     [Header("WayPointNav")]
-    NavMeshAgent agent;
+    [SerializeField] private List<Transform> waypoint = new List<Transform>(); // 자동차가 이동할 라인
+    private NavMeshAgent agent;
     private int currentNode = 0;
-    [SerializeField] List<Transform> waypoint = new List<Transform>(); // 자동차가 이동할 라인
 
     [Header("WheelAnim")]
-    [SerializeField] Animator[] anim_Wheel;
+    [SerializeField] private Animator[] anim_Wheel;
 
-    private bool isPlayerInRange = false; // 플레이어가 범위 안에 있는지 확인하는 플래그
-    private bool isShinho = false; // 신호등 인식
+    private bool isPlayerInRange = false;
+    private bool isShinho = false;
 
-    public bool test = false;
+    public bool offline = false; // 주차용 차량 판별
+
     void Start()
     {
+        // NavMeshAgent 및 Waypoint 초기화 검증
         agent = GetComponent<NavMeshAgent>();
+        if (agent == null || waypoint == null || waypoint.Count == 0)
+        {
+            Debug.LogError("NavMeshAgent 또는 Waypoint가 제대로 설정되지 않았습니다.");
+            enabled = false; // 스크립트 비활성화
+            return;
+        }
+
+        if (offline) return; // 주차 차량은 초기화 작업 생략
+
         agent.autoBraking = false;
-        agent.speed = speed; // 기본 속도 설정
-        isPlayerInRange = false;
-        isShinho = false;
-        GotoNext();
-        IdleLine();
+        agent.speed = speed;
+        GotoNext(); // 첫 Waypoint로 이동
+        SetWheelAnimation("Idle"); // 기본 애니메이션
     }
 
     void Update()
     {
-            if (!isPlayerInRange) // 플레이어가 범위에 없을 때만 이동
-            {
-                HandleDeceleration();
-            }
-  
-        CarAnim();
+        if (offline || isPlayerInRange) return;
+
+        HandleDeceleration();
     }
 
     void FixedUpdate()
     {
-        if (!isPlayerInRange && !isShinho && !agent.pathPending && agent.remainingDistance < 2f)
+        if (offline || isPlayerInRange || isShinho || agent.pathPending) return;
+
+        if (agent.remainingDistance < 2f)
         {
-            GotoNext(); // 다음 Waypoint로 이동
+            GotoNext();
         }
     }
 
-    void GotoNext()
+    private void GotoNext()
     {
-        if (currentNode == waypoint.Count - 1)
+        if (waypoint.Count == 0) return;
+
+        // 마지막 Waypoint에 도달하면 초기화
+        if (currentNode >= waypoint.Count)
         {
             currentNode = 0;
-            agent.speed = speed; // 속도 원래대로 복구
+            agent.speed = speed; // 속도 복구
         }
-        else
+
+        // 유효한 Waypoint로 이동
+        if (waypoint[currentNode] != null)
         {
-            // 다음 Waypoint로 이동
             agent.destination = waypoint[currentNode].position;
             currentNode++;
         }
     }
 
-    void HandleDeceleration()
+    private void HandleDeceleration()
     {
-        
         if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance)
         {
-            // 마지막 Waypoint로 접근 시 속도 점진적으로 줄이기
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
-            Invoke("ClearPosition", 1f);//1초 뒤 차량 위치를 처음 위치로 초기화
+            Invoke(nameof(ResetPosition), 1f); // 1초 뒤 위치 초기화
         }
     }
-    public void ClearPosition()//차량 위치 초기화
+
+    private void ResetPosition()
     {
         transform.position = waypoint[0].position;
+        currentNode = 0;
+        agent.speed = speed; // 기본 속도로 복구
     }
-    private void OnDrawGizmos()
-    {
-        for (int i = 0; i < waypoint.Count; i++)
-        {
-            Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
-            Gizmos.DrawSphere(waypoint[i].transform.position, 2);
-            Gizmos.DrawWireSphere(waypoint[i].transform.position, 20f);
 
-            if (i < waypoint.Count - 1)
-            {
-                if (waypoint[i] && waypoint[i + 1])
-                {
-                    Gizmos.color = Color.red;
-                    if (i < waypoint.Count - 1)
-                        Gizmos.DrawLine(waypoint[i].position, waypoint[i + 1].position);
-                    if (i < waypoint.Count - 2)
-                    {
-                        Gizmos.DrawLine(waypoint[waypoint.Count - 1].position, waypoint[0].position);
-                    }
-                }
-            }
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
+        if (offline) return;
+
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
             isPlayerInRange = true;
-            agent.isStopped = true; // 차량 멈춤
-            StopLine(); // 정지 애니메이션
+            agent.isStopped = true;
+            SetWheelAnimation("Stop");
         }
-        if (other.CompareTag("LeftPoint")|| other.CompareTag("RightPoint")) // 바퀴가 회전할 타이밍에 애니메이션 적용 
+        else if (other.CompareTag("LeftPoint") || other.CompareTag("RightPoint"))
         {
-            RotationPoint(other.tag);
+            HandleTurnAnimation(other.tag);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (offline) return;
+
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
             isPlayerInRange = false;
-            agent.isStopped = false; // 차량 재시작
+            agent.isStopped = false;
             agent.speed = speed; // 기본 속도로 복구
-            IdleLine(); // 기본 애니메이션
-        }
-        
-    }
-    public void CarAnim()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            LeftRine();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            RightLine();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            IdleLine();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StopLine();
-        }
-    }
-    public void RotationPoint(string rot)
-    {
-        if (rot.Equals("LeftPoint"))
-        {
-            LeftRine();
-            Invoke("IdleLine", 2f);
-        }
-        else if(rot.Equals("RightPoint"))
-        {
-            RightLine();
-            Invoke("IdleLine", 2f);
-        }
-        else
-        {
-            StopLine();
+            SetWheelAnimation("Idle");
         }
     }
 
-    public void LeftRine()
+    private void HandleTurnAnimation(string tag)
     {
-        foreach (Animator anim in anim_Wheel)
+        if (tag == "LeftPoint")
         {
-            anim.SetBool("Right", false);
-            anim.SetBool("Stop", false);
-            anim.SetBool("Left", true);
+            SetWheelAnimation("Left");
         }
-        Debug.Log("좌회전중");
+        else if (tag == "RightPoint")
+        {
+            SetWheelAnimation("Right");
+        }
+        Invoke(nameof(ResetAnimation), 2f);
     }
 
-    public void RightLine()
+    private void SetWheelAnimation(string state)
     {
-        foreach (Animator anim in anim_Wheel)
+        foreach (var anim in anim_Wheel)
         {
-            anim.SetBool("Left", false);
-            anim.SetBool("Stop", false);
-            anim.SetBool("Right", true);
-        }
-        Debug.Log("우회전중");
-    }
-
-    public void IdleLine()
-    {
-        foreach (Animator anim in anim_Wheel)
-        {
-            anim.SetBool("Right", false);
-            anim.SetBool("Left", false);
-            anim.SetBool("Stop", false);
+            anim.SetBool("Left", state == "Left");
+            anim.SetBool("Right", state == "Right");
+            anim.SetBool("Stop", state == "Stop");
         }
     }
 
-    public void StopLine()
+    private void ResetAnimation()
     {
-        foreach (Animator anim in anim_Wheel)
-        {
-            anim.SetBool("Right", false);
-            anim.SetBool("Left", false);
-            anim.SetBool("Stop", true);
-        }
+        SetWheelAnimation("Idle");
     }
-
-    
 }
