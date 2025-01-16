@@ -12,10 +12,10 @@ public class PlayerMainCamera : MonoBehaviour
     [SerializeField] PostProcessingProfile day_Scene;
     [SerializeField] PostProcessingProfile night_Scene;
 
+
     public static PlayerMainCamera camera_single {  get; private set; }
     private Transform death_Camera_Target;
     public float rotationDuration = 1f;
-
     private Coroutine rotationCoroutine;
 
     private void Awake()
@@ -54,35 +54,60 @@ public class PlayerMainCamera : MonoBehaviour
 
     public void DeathCamera()
     {
-        death_Camera_Target = Enemy.enemy_single.deathTarget;
+        death_Camera_Target = Enemy.enemy_single.deathCamTarget; // 플레이어가 enemy 타겟으로 카메라 전환
         Debug.Log(death_Camera_Target);
     }
 
-    public void RotateTarget()
+    public void RotateTarget() // 에너미에서 작동시키려고 메소드화 시킨거
     {
-        StartCoroutine(RotateCamera());
+        StartCoroutine(RotateTargetCamera());
     }
 
-    private IEnumerator RotateCamera()
+    private IEnumerator RotateTargetCamera() // 카메라 돌리는 코드
     {
         DeathCamera();
         Quaternion initialRotation = transform.rotation;
         Quaternion targetRotation = Quaternion.LookRotation(death_Camera_Target.position - transform.position);
-
         float elapsedTime = 0f;
 
         while (elapsedTime < rotationDuration)
         {
             float t = elapsedTime / rotationDuration;
-
             transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, t);
-
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.rotation = targetRotation;
-
         rotationCoroutine = null;
     }
+
+    public void CameraEffect() // 에너미에서 작동시키려고 메소드화
+    {
+        StartCoroutine(ShakeCamera());
+    }
+
+    private IEnumerator ShakeCamera() // 카메라 흔드는 코드
+    {
+        float elapsedTime = 0f; // 경과시간
+        float zRotation_duration = 0.5f;
+        float float_duration = 0.15f;
+        float maxtime = 5f;
+        float originalFOV = mainCamera.fieldOfView;
+
+        while (elapsedTime < maxtime)
+        {
+            elapsedTime += Time.deltaTime;
+            float zRotation = Mathf.Sin(elapsedTime * Mathf.PI * 2 / zRotation_duration) * 3; // -3~3
+            float shakefov = Mathf.Sin(elapsedTime * Mathf.PI * 2 / float_duration) * 3;
+            Vector3 currentRotation = mainCamera.transform.localEulerAngles;
+            mainCamera.fieldOfView = originalFOV + shakefov;
+            currentRotation.z = zRotation;
+            mainCamera.transform.localEulerAngles = currentRotation;
+
+            yield return null;
+        }
+    }
+
+
 }
