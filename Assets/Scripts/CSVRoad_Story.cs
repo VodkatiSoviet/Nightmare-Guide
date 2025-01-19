@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CSVRoad_Story : MonoBehaviour
 {
+    [SerializeField] private string go_Story;
+
     [SerializeField] private TextMeshProUGUI dialogue; // 기본 자막
     [SerializeField] private GameObject dialogueBox;  // 대화창
     [SerializeField] private GameObject dialogueOptions; // 선택지
@@ -20,7 +22,7 @@ public class CSVRoad_Story : MonoBehaviour
 
     void Start()
     {
-        data = CSVReader.Read("Story");
+        data = CSVReader.Read(go_Story);
         if (data != null && data.Count > 0)
         {
             Debug.Log($"CSV 데이터 로드 성공: 총 {data.Count}개 항목");
