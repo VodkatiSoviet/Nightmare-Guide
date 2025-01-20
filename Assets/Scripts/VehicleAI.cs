@@ -83,20 +83,33 @@ public class VehicleAI : MonoBehaviour
     {
         if (waypoint.Count == 0) return;
 
-        // 마지막 Waypoint에 도달하면 초기화
-        if (currentNode >= waypoint.Count && !roopCar)
-        {
-            currentNode = 0;
-            agent.speed = speed; // 속도 복구
-        }
-
         // 유효한 Waypoint로 이동
         if (waypoint[currentNode] != null)
         {
             agent.destination = waypoint[currentNode].position;
-            currentNode++;
+        }
+
+        // 현재 노드를 업데이트
+        currentNode++;
+
+        // 마지막 노드에 도달했을 경우 처리
+        if (currentNode >= waypoint.Count)
+        {
+            if (roopCar)
+            {
+                // 루프 모드: 첫 노드로 되돌아감
+                currentNode = 0;
+            }
+            else
+            {
+                // 루프 모드가 아닐 경우: 초기화
+                agent.isStopped = true; // 이동 정지
+                currentNode = 0; // 첫 노드로 초기화
+                agent.speed = speed; // 속도 복구
+            }
         }
     }
+
 
     private void HandleDeceleration()
     {
