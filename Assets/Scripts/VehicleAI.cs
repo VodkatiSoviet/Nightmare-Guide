@@ -20,7 +20,7 @@ public class VehicleAI : MonoBehaviour
     private bool isShinho = false;
 
     public bool offline = false; // 주차용 차량 판별
-
+    public bool roopCar = true;
     void Start()
     {
         // NavMeshAgent 및 Waypoint 초기화 검증
@@ -56,13 +56,35 @@ public class VehicleAI : MonoBehaviour
             GotoNext();
         }
     }
+    private void OnDrawGizmos()
+    {
+        for (int i = 0; i < waypoint.Count; i++)
+        {
+            Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 0.3f);
+            Gizmos.DrawSphere(waypoint[i].transform.position, 2);
+            Gizmos.DrawWireSphere(waypoint[i].transform.position, 20f);
 
+            if (i < waypoint.Count - 1)
+            {
+                if (waypoint[i] && waypoint[i + 1])
+                {
+                    Gizmos.color = Color.red;
+                    if (i < waypoint.Count - 1)
+                        Gizmos.DrawLine(waypoint[i].position, waypoint[i + 1].position);
+                    if (i < waypoint.Count - 2)
+                    {
+                        Gizmos.DrawLine(waypoint[waypoint.Count - 1].position, waypoint[0].position);
+                    }
+                }
+            }
+        }
+    }
     private void GotoNext()
     {
         if (waypoint.Count == 0) return;
 
         // 마지막 Waypoint에 도달하면 초기화
-        if (currentNode >= waypoint.Count)
+        if (currentNode >= waypoint.Count && !roopCar)
         {
             currentNode = 0;
             agent.speed = speed; // 속도 복구
