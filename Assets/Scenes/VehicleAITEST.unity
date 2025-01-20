@@ -8387,7 +8387,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 908351754}
         m_TargetAssemblyTypeName: CSVRoad_Story, Assembly-CSharp
-        m_MethodName: OnSelect
+        m_MethodName: OnSelectOption
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -23062,13 +23062,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee83bb30487d84842a57efe14ea8473e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  go_Story: Story
   dialogue: {fileID: 701953726}
-  dialogue_Box: {fileID: 701953724}
-  dialogue_Obj: {fileID: 262576946}
-  select_1: {fileID: 2120186889}
-  select_2: {fileID: 827882018}
-  dialogue_Cnt: 0
-  dialogue_State: 
+  dialogueBox: {fileID: 701953724}
+  dialogueOptions: {fileID: 262576946}
+  option1: {fileID: 2120186889}
+  option2: {fileID: 827882018}
 --- !u!4 &908351755
 Transform:
   m_ObjectHideFlags: 0
@@ -38787,7 +38786,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 908351754}
         m_TargetAssemblyTypeName: CSVRoad_Story, Assembly-CSharp
-        m_MethodName: OnSelect
+        m_MethodName: OnSelectOption
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
