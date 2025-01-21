@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class VehicleAI : MonoBehaviour
 {
     public float speed = 10f; // 기본 속도
-    public float slowSpeed = 2f; // 마지막 Waypoint로 갈 때 속도
+    public float slowSpeed = 10f; // 마지막 Waypoint로 갈 때 속도
     public float decelerationDistance = 3f; // 속도를 줄이기 시작할 거리
 
     [Header("WayPointNav")]
@@ -83,37 +83,24 @@ public class VehicleAI : MonoBehaviour
     {
         if (waypoint.Count == 0) return;
 
-        // 유효한 Waypoint로 이동
-        if (waypoint[currentNode] != null)
+        if (currentNode >= waypoint.Count&& roopCar)
         {
-            agent.destination = waypoint[currentNode].position;
-        }
-
-        // 현재 노드를 업데이트
-        currentNode++;
-
-        // 마지막 노드에 도달했을 경우 처리
-        if (currentNode >= waypoint.Count)
-        {
-            if (roopCar)
-            {
-                // 루프 모드: 첫 노드로 되돌아감
+            
                 currentNode = 0;
-            }
-            else
-            {
-                // 루프 모드가 아닐 경우: 초기화
-                agent.isStopped = true; // 이동 정지
-                currentNode = 0; // 첫 노드로 초기화
-                agent.speed = speed; // 속도 복구
-            }
+                Debug.Log("차량이 배회합니다.");
+            
+            
         }
+            agent.destination = waypoint[currentNode].position;
+            currentNode++;
     }
+
+
 
 
     private void HandleDeceleration()
     {
-        if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance)
+        if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance && !roopCar)
         {
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
             Invoke(nameof(ResetPosition), 1f); // 1초 뒤 위치 초기화
@@ -125,6 +112,8 @@ public class VehicleAI : MonoBehaviour
         transform.position = waypoint[0].position;
         currentNode = 0;
         agent.speed = speed; // 기본 속도로 복구
+        Debug.Log("차량 위치를 초기화합니다.");
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -140,6 +129,17 @@ public class VehicleAI : MonoBehaviour
         else if (other.CompareTag("LeftPoint") || other.CompareTag("RightPoint"))
         {
             HandleTurnAnimation(other.tag);
+        }
+        if (other.CompareTag("decelerationRange"))
+        {
+            agent.speed = 10f;
+            Debug.Log("감속중");
+        }
+        if (other.CompareTag("accelerationRange"))
+        {
+
+            agent.speed = speed;
+            Debug.Log("가속중");
         }
     }
 

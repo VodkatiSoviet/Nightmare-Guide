@@ -8,6 +8,8 @@ TagManager:
   - RightPoint
   - LeftPoint
   - Shinho
+  - decelerationRange
+  - accelerationRange
   layers:
   - Default
   - TransparentFX
