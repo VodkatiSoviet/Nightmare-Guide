@@ -10,7 +10,7 @@ public class VehicleAI : MonoBehaviour
 
     [Header("WayPointNav")]
     [SerializeField] private List<Transform> waypoint = new List<Transform>(); // 자동차가 이동할 라인
-    private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
     private int currentNode = 0;
 
     [Header("WheelAnim")]
@@ -21,16 +21,34 @@ public class VehicleAI : MonoBehaviour
 
     public bool offline = false; // 주차용 차량 판별
     public bool roopCar = true;
+
+    private void Awake()
+    {
+       
+        if (agent == null)
+        {
+            agent = GetComponent<NavMeshAgent>();
+
+        }
+    }
     void Start()
     {
-        // NavMeshAgent 및 Waypoint 초기화 검증
-        agent = GetComponent<NavMeshAgent>();
-        if (agent == null || waypoint == null || waypoint.Count == 0)
+
+        if (agent == null)
         {
-            Debug.LogError("NavMeshAgent 또는 Waypoint가 제대로 설정되지 않았습니다.");
-            enabled = false; // 스크립트 비활성화
-            return;
+            Debug.LogError(" agent 제대로 설정되지 않았습니다.");
+
         }
+        if (waypoint == null) { Debug.LogError(" Waypoint가 제대로 설정되지 않았습니다."); }
+            if (waypoint.Count == 0)
+            {
+                Debug.LogError(" Waypoint가 없습니다.");
+                Debug.Log(waypoint.Count);
+            }
+
+
+        enabled = false; // 스크립트 비활성화
+       
 
         if (offline) return; // 주차 차량은 초기화 작업 생략
 
@@ -42,6 +60,10 @@ public class VehicleAI : MonoBehaviour
 
     void Update()
     {
+        if (agent == null)
+        {
+            Debug.LogError("NavMeshAgent  제대로 설정되지 않았습니다.");
+        }
         if (offline || isPlayerInRange) return;
 
         HandleDeceleration();
