@@ -3193,28 +3193,14 @@ MonoBehaviour:
   speed: 10
   slowSpeed: 2
   decelerationDistance: 3
-  waypoint:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoint: []
   anim_Wheel:
   - {fileID: 3587196808308371336}
   - {fileID: 6135058846165639529}
   - {fileID: 8226399277252556204}
   - {fileID: 6388043493518821538}
-  test: 0
+  offline: 0
+  roopCar: 1
 --- !u!54 &566327893537537596
 Rigidbody:
   m_ObjectHideFlags: 0
