@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class VehicleAI : MonoBehaviour
 {
-    public float speed = 10f; // 기본 속도
+    public float speed ; // 기본 속도
     public float slowSpeed = 10f; // 마지막 Waypoint로 갈 때 속도
     public float decelerationDistance = 3f; // 속도를 줄이기 시작할 거리
 
@@ -32,6 +32,8 @@ public class VehicleAI : MonoBehaviour
 
         // NavMeshAgent 및 Waypoint 초기화 검증
         agent = GetComponent<NavMeshAgent>();
+      
+
         if (agent == null || waypoint == null || waypoint.Count == 0)
         {
             Debug.LogError(" Waypoint가 제대로 설정되지 않았습니다."); 
@@ -43,6 +45,7 @@ public class VehicleAI : MonoBehaviour
 
         agent.autoBraking = false;
         agent.speed = speed;
+        Debug.Log(this.name+ " => 차량 현재 속도 : " + speed);
         GotoNext(); // 첫 Waypoint로 이동
         SetWheelAnimation("Idle"); // 기본 애니메이션
     }
@@ -99,8 +102,8 @@ public class VehicleAI : MonoBehaviour
             
             
         }
-            agent.destination = waypoint[currentNode].position;
-            currentNode++;
+        agent.destination = waypoint[currentNode].position;
+        currentNode++;
     }
 
 
@@ -140,6 +143,9 @@ public class VehicleAI : MonoBehaviour
         }
         if (other.CompareTag("decelerationRange"))
         {
+            
+            if (!other.transform.parent.gameObject.name.Equals(waypoint[currentNode].transform.parent.name))
+                return;
             agent.speed = 10f;
             Debug.Log("감속중");
         }

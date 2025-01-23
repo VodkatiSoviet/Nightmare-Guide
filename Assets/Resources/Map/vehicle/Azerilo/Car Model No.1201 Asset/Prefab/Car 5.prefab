@@ -3234,6 +3234,7 @@ GameObject:
   - component: {fileID: 1304386653361396070}
   - component: {fileID: 4571903492585590577}
   - component: {fileID: 7026001939211071857}
+  - component: {fileID: 2091465294071802769}
   m_Layer: 0
   m_Name: Car 5
   m_TagString: Untagged
@@ -3277,9 +3278,14 @@ MonoBehaviour:
   slowSpeed: 10
   decelerationDistance: 3
   waypoint: []
-  anim_Wheel: []
+  agent: {fileID: 0}
+  anim_Wheel:
+  - {fileID: 2912378192396366390}
+  - {fileID: 546540114316834645}
+  - {fileID: 7461086241504326690}
+  - {fileID: 6723424107971412985}
   offline: 0
-  roopCar: 1
+  loopCar: 1
 --- !u!54 &4571903492585590577
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3328,6 +3334,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.67, y: 1.27, z: 3.66}
   m_Center: {x: 0, y: 0.1, z: 0.21}
+--- !u!195 &2091465294071802769
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780351737568190}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.74
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.03
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1791251313518316
 GameObject:
   m_ObjectHideFlags: 0
