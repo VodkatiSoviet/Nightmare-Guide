@@ -4,13 +4,13 @@ using UnityEngine.AI;
 
 public class VehicleAI : MonoBehaviour
 {
-    public float speed = 10f; // 기본 속도
+    public float speed ; // 기본 속도
     public float slowSpeed = 10f; // 마지막 Waypoint로 갈 때 속도
     public float decelerationDistance = 3f; // 속도를 줄이기 시작할 거리
 
     [Header("WayPointNav")]
     [SerializeField] private List<Transform> waypoint = new List<Transform>(); // 자동차가 이동할 라인
-    private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
     private int currentNode = 0;
 
     [Header("WheelAnim")]
@@ -20,28 +20,39 @@ public class VehicleAI : MonoBehaviour
     private bool isShinho = false;
 
     public bool offline = false; // 주차용 차량 판별
-    public bool roopCar = true;
+    public bool loopCar = true;
+  
     void Start()
     {
-        // NavMeshAgent 및 Waypoint 초기화 검증
-        agent = GetComponent<NavMeshAgent>();
-        if (agent == null || waypoint == null || waypoint.Count == 0)
+        if (offline)
         {
-            Debug.LogError("NavMeshAgent 또는 Waypoint가 제대로 설정되지 않았습니다.");
             enabled = false; // 스크립트 비활성화
             return;
         }
 
-        if (offline) return; // 주차 차량은 초기화 작업 생략
+        // NavMeshAgent 및 Waypoint 초기화 검증
+        agent = GetComponent<NavMeshAgent>();
+      
+
+        if (agent == null || waypoint == null || waypoint.Count == 0)
+        {
+            Debug.LogError(" Waypoint가 제대로 설정되지 않았습니다."); 
+             
+            enabled = false; // 스크립트 비활성화
+            return;
+        }
+        
 
         agent.autoBraking = false;
         agent.speed = speed;
+        Debug.Log(this.name+ " => 차량 현재 속도 : " + speed);
         GotoNext(); // 첫 Waypoint로 이동
         SetWheelAnimation("Idle"); // 기본 애니메이션
     }
 
     void Update()
     {
+       
         if (offline || isPlayerInRange) return;
 
         HandleDeceleration();
@@ -83,7 +94,7 @@ public class VehicleAI : MonoBehaviour
     {
         if (waypoint.Count == 0) return;
 
-        if (currentNode >= waypoint.Count&& roopCar)
+        if (currentNode >= waypoint.Count&& loopCar)
         {
             
                 currentNode = 0;
@@ -91,8 +102,8 @@ public class VehicleAI : MonoBehaviour
             
             
         }
-            agent.destination = waypoint[currentNode].position;
-            currentNode++;
+        agent.destination = waypoint[currentNode].position;
+        currentNode++;
     }
 
 
@@ -100,10 +111,10 @@ public class VehicleAI : MonoBehaviour
 
     private void HandleDeceleration()
     {
-        if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance && !roopCar)
+        if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance && !loopCar)
         {
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
-            Invoke(nameof(ResetPosition), 1f); // 1초 뒤 위치 초기화
+           
         }
     }
 
@@ -113,7 +124,7 @@ public class VehicleAI : MonoBehaviour
         currentNode = 0;
         agent.speed = speed; // 기본 속도로 복구
         Debug.Log("차량 위치를 초기화합니다.");
-
+        GotoNext();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -132,20 +143,27 @@ public class VehicleAI : MonoBehaviour
         }
         if (other.CompareTag("decelerationRange"))
         {
+            if (!other.transform.parent.gameObject.name.Equals(waypoint[currentNode].transform.parent.name))
+                return;
             agent.speed = 10f;
             Debug.Log("감속중");
         }
         if (other.CompareTag("accelerationRange"))
         {
-
             agent.speed = speed;
             Debug.Log("가속중");
+        }
+        if (other.CompareTag("ResetPoint"))
+        {
+            ResetPosition();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (offline) return;
+
+        
 
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
@@ -155,6 +173,7 @@ public class VehicleAI : MonoBehaviour
             SetWheelAnimation("Idle");
         }
     }
+
 
     private void HandleTurnAnimation(string tag)
     {
