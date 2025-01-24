@@ -131,6 +131,23 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline) return;
 
+        if (other.CompareTag("Stop_Zone")){
+            if (Stop_Car.instance.stop)
+            {
+                isPlayerInRange = true;
+                agent.isStopped = true; // 차량 정지
+                SetWheelAnimation("Stop");
+                
+            }
+            else 
+            {
+                isPlayerInRange = false;
+                agent.isStopped = false;  // 이동 시작
+                agent.speed = speed;
+                SetWheelAnimation("Idle");
+            }
+        }
+
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
             isPlayerInRange = true;
