@@ -10,6 +10,8 @@ TagManager:
   - Shinho
   - decelerationRange
   - accelerationRange
+  - ResetPoint
+  - Car
   layers:
   - Default
   - TransparentFX

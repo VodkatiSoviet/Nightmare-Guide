@@ -114,7 +114,7 @@ public class VehicleAI : MonoBehaviour
         if (currentNode == waypoint.Count - 1 && agent.remainingDistance <= decelerationDistance && !loopCar)
         {
             agent.speed = Mathf.Lerp(agent.speed, slowSpeed, Time.deltaTime);
-            Invoke(nameof(ResetPosition), 1f); // 1초 뒤 위치 초기화
+           
         }
     }
 
@@ -124,7 +124,7 @@ public class VehicleAI : MonoBehaviour
         currentNode = 0;
         agent.speed = speed; // 기본 속도로 복구
         Debug.Log("차량 위치를 초기화합니다.");
-
+        GotoNext();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -143,7 +143,6 @@ public class VehicleAI : MonoBehaviour
         }
         if (other.CompareTag("decelerationRange"))
         {
-            
             if (!other.transform.parent.gameObject.name.Equals(waypoint[currentNode].transform.parent.name))
                 return;
             agent.speed = 10f;
@@ -151,15 +150,20 @@ public class VehicleAI : MonoBehaviour
         }
         if (other.CompareTag("accelerationRange"))
         {
-
             agent.speed = speed;
             Debug.Log("가속중");
+        }
+        if (other.CompareTag("ResetPoint"))
+        {
+            ResetPosition();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (offline) return;
+
+        
 
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
@@ -169,6 +173,7 @@ public class VehicleAI : MonoBehaviour
             SetWheelAnimation("Idle");
         }
     }
+
 
     private void HandleTurnAnimation(string tag)
     {
