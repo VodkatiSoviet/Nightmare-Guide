@@ -131,7 +131,7 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline) return;
 
-        if (other.CompareTag("Stop_Zone")){
+        if (other.CompareTag("StopZone")){
             if (Stop_Car.instance.stop)
             {
                 isPlayerInRange = true;
