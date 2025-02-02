@@ -79,6 +79,11 @@ public class CSVRoad_Story : MonoBehaviour
                 returnPoint = i; // 현재 진행도를 ReturnPoint로 저장
                 Debug.Log($"ReturnPoint 저장됨: {returnPoint}");
             }
+            if(data[i].ContainsKey("ReturnPoint") && data[i]["ReturnPoint"].ToString() == "go")
+            {
+                returnPoint = 999;//어떤 선택지를 선택하든 진행
+                Debug.Log("선택지 관계 없이 진행");
+            }
 
             // 선택지 활성화 처리
             if (data[i]["Character"].ToString() == "Select")
@@ -121,11 +126,21 @@ public class CSVRoad_Story : MonoBehaviour
     {
         if (choice == 1) // 선택지 1: ReturnPoint로 돌아가기
         {
-            if (returnPoint != -1)
+            if (returnPoint != -1 && returnPoint != 999)
             {
                 Debug.Log("선택지 1 선택: ReturnPoint로 이동");
                 StartCoroutine(DisplayChapterDialogue(returnPoint, data.Count - 1)); // ReturnPoint부터 다시 출력
                 returnPoint = -1; // ReturnPoint 초기화
+            }
+            else if (returnPoint == 999)//선택지 관계없이 다음 대사 진행
+            {
+                //선택지 상관없이 다음대사를 진행시키고 싶을떄 사용
+                Debug.Log("다음 대사 진행");
+                progress += 4;
+                string currentChapter = data[progress]["Chapter"].ToString();
+                // progress가 업데이트된 상태에서 다시 대사 출력
+                StartCoroutine(DisplayChapterDialogue(progress, chapterEnd));
+                returnPoint = -1;
             }
             else
             {
@@ -140,14 +155,7 @@ public class CSVRoad_Story : MonoBehaviour
             // progress가 업데이트된 상태에서 다시 대사 출력
             StartCoroutine(DisplayChapterDialogue(progress, chapterEnd));
         }
-        else if (choice == 3)
-        {   //선택지 상관없이 다음대사를 진행시키고 싶을떄 사용
-            Debug.Log("다음 대사 진행");
-            progress += 4;
-            string currentChapter = data[progress]["Chapter"].ToString();
-            // progress가 업데이트된 상태에서 다시 대사 출력
-            StartCoroutine(DisplayChapterDialogue(progress, chapterEnd));
-        }
+    
 
         dialogueOptions.SetActive(false);
         dialogueBox.SetActive(true);
