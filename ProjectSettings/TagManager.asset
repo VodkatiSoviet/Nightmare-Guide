@@ -12,6 +12,7 @@ TagManager:
   - accelerationRange
   - ResetPoint
   - Car
+  - StopZone
   layers:
   - Default
   - TransparentFX
