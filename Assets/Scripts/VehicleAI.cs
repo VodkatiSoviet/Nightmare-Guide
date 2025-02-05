@@ -21,19 +21,13 @@ public class VehicleAI : MonoBehaviour
 
     public bool offline = false; // 주차용 차량 판별
     public bool loopCar = true;
-
-    [Header("충돌 방지")]
-    public int priority = 0; // 차량 우선순위 (낮을수록 우선)
-    private bool isWaiting = false; // 정지 상태 여부
+  
     void Start()
     {
         if (offline)
         {
-            SetWheelAnimation("Stop"); // 애니메이션 정지
-            if (agent != null) agent.enabled = false; // 네비게이션 비활성화
-            this.enabled = false; // 스크립트 비활성화
+            enabled = false; // 스크립트 비활성화
             return;
-    
         }
 
         // NavMeshAgent 및 Waypoint 초기화 검증
@@ -137,17 +131,6 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline) return;
 
-        if (other.CompareTag("Car"))
-        {
-            VehicleAI otherVehicle = other.GetComponent<VehicleAI>();
-
-            // 상대 차량이 존재하고, 내 우선순위가 낮으면 정지
-            if (otherVehicle != null && otherVehicle.priority < this.priority)
-            {
-                StopCar(); // 정지
-            }
-        }
-
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
             isPlayerInRange = true;
@@ -160,7 +143,6 @@ public class VehicleAI : MonoBehaviour
         }
         if (other.CompareTag("decelerationRange"))
         {
-            //자기 라인에 있는 오브젝트에만 효과 적용
             if (!other.transform.parent.gameObject.name.Equals(waypoint[currentNode].transform.parent.name))
                 return;
             agent.speed = 10f;
@@ -181,18 +163,8 @@ public class VehicleAI : MonoBehaviour
     {
         if (offline) return;
 
+        
 
-
-        if (other.CompareTag("Car"))
-        {
-            VehicleAI otherVehicle = other.GetComponent<VehicleAI>();
-
-            // 상대 차량이 존재하고, 내 우선순위가 낮으면 정지
-            if (otherVehicle != null && otherVehicle.priority < this.priority)
-            {
-                StartCar(); // 정지
-            }
-        }
         if (other.CompareTag("Player") || other.CompareTag("Shinho"))
         {
             isPlayerInRange = false;
@@ -201,17 +173,7 @@ public class VehicleAI : MonoBehaviour
             SetWheelAnimation("Idle");
         }
     }
-    void StopCar()
-    {
-        isWaiting = true;
-        agent.isStopped = true;
-    }
 
-    void StartCar()
-    {
-        isWaiting = false;
-        agent.isStopped = false;
-    }
 
     private void HandleTurnAnimation(string tag)
     {
