@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 public class Maze_Mgr : MonoBehaviour
 {
+    public static Maze_Mgr instance;
 
     [Header("Nuber")]
     // [RED=1, ORANGE=2, YELLOW=3, GREEN=4, BLUE=5, PURPLE=6, BLACK=7, WHITE=8, GRAY=9]
@@ -14,9 +15,15 @@ public class Maze_Mgr : MonoBehaviour
     public int[] answer;
     bool anw_Check = false;
     int check_Point = 0;
+
+    [Header("Panel")]//패널 체크
+    public int panel_Check=0;
+
     private void Start()
     {
+        if (instance == null) { instance = this; }
         Make_Answer();
+        
     }
     private void Make_Answer()
     {
