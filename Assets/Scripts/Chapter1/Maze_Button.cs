@@ -3,19 +3,24 @@ using UnityEditor;
 
 public class Maze_Button : MonoBehaviour
 {
+    public static Maze_Button instance;
+
     public Color selectedColor = Color.white; // 기본 색상
+    public Color changedColor; // 변경할 색상
     private Material originalMaterial; // 원래 마테리얼 저장
     [SerializeField] Material changeMaterial; // 선택후 변경될 마테리얼
-    private bool isSelect = false; // 색상을 선택했는지 확인
-
-
+    public bool isSelect = false; // 색상을 선택했는지 확인
+    public int set_Value=0; //발송할 변수
+    private void Start()
+    {
+        if (instance == null) { instance = this; }
+    }
     private void OnEnable()
     {
-        
         ApplyColor();
     }
 
-    public void ApplyColor()
+    public void ApplyColor()//색상 적용
     {
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
@@ -28,21 +33,28 @@ public class Maze_Button : MonoBehaviour
     {
         if (!isSelect)
         {
-            this.GetComponent<Renderer>().material = changeMaterial;
+            //this.GetComponent<Renderer>().material = changeMaterial; //마테리얼 변경
+            this.GetComponent<Renderer>().material.color = changedColor; //색상 초기화
             isSelect = true;
+            Maze_Mgr.instance.panel_Check++;
+            Maze_Mgr.instance.anw.Add(set_Value);
         }
         else
         {
-            this.GetComponent<Renderer>().material = originalMaterial;
-            ApplyColor();
-            isSelect = false;
+            Maze_Mgr.instance.panel_Check--;
+            Maze_Mgr.instance.Btn_Clear();
         }
-            
+        
     }
-    public void Clear_Btn()
+
+
+
+    public void Clear_Btn()//버튼 초기화
     {
-       
-        this.GetComponent<Renderer>().material = originalMaterial;
+
+        //this.GetComponent<Renderer>().material = originalMaterial;//마테리얼 초기화
+        this.GetComponent<Renderer>().material.color = selectedColor;//색상 초기화
+        isSelect = false;
         ApplyColor();
     }
 

@@ -3,27 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 public class Maze_Mgr : MonoBehaviour
 {
     public static Maze_Mgr instance;
-
+   
     [Header("Nuber")]
     // [RED=1, ORANGE=2, YELLOW=3, GREEN=4, BLUE=5, PURPLE=6, BLACK=7, WHITE=8, GRAY=9]
     [SerializeField] GameObject[] num_Obj; //머테리얼을 변경할 오브젝트 
     protected int[] num_Answer = new int[4]; // answerKey
     private int[] num = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    public int[] answer;
     bool anw_Check = false;
     int check_Point = 0;
 
     [Header("Panel")]//패널 체크
-    public int panel_Check=0;
+    [SerializeField] GameObject[] btn;//자식 오젝트의 활성화 체크
+    public List<int> anw;//답안지
+    public int panel_Check= 0;//현재 활성화된 버튼
+
+    [Header("Panel_Reset")]//패널 초기화
+    //타이머
+    //주인공 사망 또는 이탈
+    [SerializeField] float timer;
+    [SerializeField] float reset_time=180f;
 
     private void Start()
     {
         if (instance == null) { instance = this; }
         Make_Answer();
-        
+
+    }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            Btn_Clear();
+        }
+        if(panel_Check == 4)//답안 체크
+        {
+            Check_Answer();
+        }
     }
     private void Make_Answer()
     {
@@ -88,16 +107,33 @@ public class Maze_Mgr : MonoBehaviour
                     
             }
         }
-       
     }
 
-    public void Write_Answer(int num)
+    public void Check_Answer()//답안 체크
     {
+        bool clear = anw.SequenceEqual(num_Answer);
+        if (clear)
+        {
+            Debug.Log("탈출 성공");
+        }
+        else
+        {
+            Btn_Clear();
+        }
+        
 
     }
-    public void Answer_Check()
+    public void Btn_Clear()
     {
-        //정답 체크
+        //버튼 초기화
+        
+       for(int i=0; i<9; i++)
+        {
+            btn[i].GetComponent<Maze_Button>().Clear_Btn();
+        }
+        panel_Check = 0;
+
+
 
     }
 
