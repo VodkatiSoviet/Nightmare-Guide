@@ -13,6 +13,7 @@ TagManager:
   - ResetPoint
   - Car
   - StopZone
+  - maze_Btn
   layers:
   - Default
   - TransparentFX
