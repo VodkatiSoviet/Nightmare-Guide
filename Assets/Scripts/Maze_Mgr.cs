@@ -20,6 +20,7 @@ public class Maze_Mgr : MonoBehaviour
     [SerializeField] GameObject[] btn;//자식 오젝트의 활성화 체크
     public List<int> anw;//답안지
     public int panel_Check= 0;//현재 활성화된 버튼
+    bool maze_Clear = false;
 
     [Header("Panel_Reset")]//패널 초기화
     //타이머
@@ -41,7 +42,7 @@ public class Maze_Mgr : MonoBehaviour
         {
             Btn_Clear();
         }
-        if(panel_Check == 4)//답안 체크
+        if(panel_Check == 4 && !maze_Clear)//답안 체크
         {
             Check_Answer();
             
@@ -119,6 +120,7 @@ public class Maze_Mgr : MonoBehaviour
         {
             Debug.Log("탈출 성공");
             clear_Obj.SetActive(true);
+            maze_Clear = true;
         }
         else
         {
