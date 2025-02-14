@@ -553,7 +553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013702915426}
   - component: {fileID: 95000014204566396}
-  - component: {fileID: 4255930000081137200}
+  - component: {fileID: 8475774433834351786}
   m_Layer: 0
   m_Name: casual26_m_highpoly
   m_TagString: Untagged
@@ -601,7 +601,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &4255930000081137200
+--- !u!136 &8475774433834351786
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -620,10 +620,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.8
+  m_Radius: 0.1572282
+  m_Height: 1.8000001
   m_Direction: 1
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0.0009999991, y: 0.85, z: -0.0010137558}
 --- !u!1 &1000011516077370
 GameObject:
   m_ObjectHideFlags: 0
