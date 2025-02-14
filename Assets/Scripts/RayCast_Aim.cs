@@ -19,6 +19,12 @@ public class RayCast_Aim : MonoBehaviour
                     Chapter1_Maze(click_object);
                 }
 
+                if (click_object.CompareTag("Door"))
+                {
+                    Debug.Log("Door");
+                    DoorCheck(click_object);
+                }
+
             }
         }
     }
@@ -31,6 +37,15 @@ public class RayCast_Aim : MonoBehaviour
         {
             mazeButton.Select_Btn(); // 클릭한 오브젝트의 Select_Btn 호출
             Debug.Log(obj.name + "색상 변경");
+        }
+    }
+
+    public void DoorCheck(GameObject obj)
+    {
+        Door door = obj.GetComponent<Door>();
+        if(door != null)
+        {
+            door.Select_Door();
         }
     }
 }
