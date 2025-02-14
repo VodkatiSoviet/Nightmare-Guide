@@ -27,6 +27,8 @@ public class Maze_Mgr : MonoBehaviour
     [SerializeField] float timer;
     [SerializeField] float reset_time=180f;
 
+    public GameObject clear_Obj;
+
     private void Start()
     {
         if (instance == null) { instance = this; }
@@ -42,6 +44,7 @@ public class Maze_Mgr : MonoBehaviour
         if(panel_Check == 4)//답안 체크
         {
             Check_Answer();
+            
         }
     }
     private void Make_Answer()
@@ -115,10 +118,12 @@ public class Maze_Mgr : MonoBehaviour
         if (clear)
         {
             Debug.Log("탈출 성공");
+            clear_Obj.SetActive(true);
         }
         else
         {
             Btn_Clear();
+            Debug.Log("다시 선택해주세요");
         }
         
 
@@ -126,7 +131,7 @@ public class Maze_Mgr : MonoBehaviour
     public void Btn_Clear()
     {
         //버튼 초기화
-        
+        anw.Clear(); 
        for(int i=0; i<9; i++)
         {
             btn[i].GetComponent<Maze_Button>().Clear_Btn();

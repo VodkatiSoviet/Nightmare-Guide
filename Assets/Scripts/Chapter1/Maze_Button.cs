@@ -41,7 +41,7 @@ public class Maze_Button : MonoBehaviour
         }
         else
         {
-            Maze_Mgr.instance.panel_Check--;
+            
             Maze_Mgr.instance.Btn_Clear();
         }
         
