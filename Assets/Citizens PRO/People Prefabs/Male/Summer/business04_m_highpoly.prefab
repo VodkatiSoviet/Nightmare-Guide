@@ -776,6 +776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013598980368}
   - component: {fileID: 95000013707658308}
+  - component: {fileID: 718963875182914938}
   m_Layer: 0
   m_Name: business04_m_highpoly
   m_TagString: Untagged
@@ -821,6 +822,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &718963875182914938
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011921644606}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1572282
+  m_Height: 1.8000001
+  m_Direction: 1
+  m_Center: {x: 0.0009999991, y: 0.85, z: -0.0010137558}
 --- !u!1 &1000011986246794
 GameObject:
   m_ObjectHideFlags: 0

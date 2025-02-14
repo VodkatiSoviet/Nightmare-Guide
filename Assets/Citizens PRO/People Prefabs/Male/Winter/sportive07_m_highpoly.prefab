@@ -677,7 +677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012201943858}
   - component: {fileID: 95000012920049618}
-  - component: {fileID: 8420660800792064962}
+  - component: {fileID: 4368087263238920869}
   m_Layer: 0
   m_Name: sportive07_m_highpoly
   m_TagString: Untagged
@@ -725,7 +725,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &8420660800792064962
+--- !u!136 &4368087263238920869
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -744,10 +744,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.8
+  m_Radius: 0.1572282
+  m_Height: 1.8000001
   m_Direction: 1
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_Center: {x: 0.0009999991, y: 0.85, z: -0.0010137558}
 --- !u!1 &1000011526189194
 GameObject:
   m_ObjectHideFlags: 0
