@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class RayCast_Aim : MonoBehaviour
 {
+    private void Start()
+    {
+        // 커서를 화면 중앙에 고정
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;  // 커서를 보이게 설정
+    }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
@@ -29,7 +35,7 @@ public class RayCast_Aim : MonoBehaviour
         }
     }
 
-    public void Chapter1_Maze(GameObject obj)
+    public void Chapter1_Maze(GameObject obj) //챕터 1 미로맵 탈출용 버튼 클릭
     {
         Maze_Button mazeButton = obj.GetComponent<Maze_Button>();
 
