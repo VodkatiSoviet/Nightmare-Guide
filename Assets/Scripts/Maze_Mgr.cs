@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
+using UnityStandardAssets.Characters.FirstPerson;
 public class Maze_Mgr : MonoBehaviour
 {
     public static Maze_Mgr instance;
    
-    [Header("Nuber")]
+    [Header("Number")]
     // [RED=1, ORANGE=2, YELLOW=3, GREEN=4, BLUE=5, PURPLE=6, BLACK=7, WHITE=8, GRAY=9]
     [SerializeField] GameObject[] num_Obj; //머테리얼을 변경할 오브젝트 
     protected int[] num_Answer = new int[4]; // answerKey
@@ -22,13 +23,18 @@ public class Maze_Mgr : MonoBehaviour
     public int panel_Check= 0;//현재 활성화된 버튼
     bool maze_Clear = false;
 
+    //클리어
+    [SerializeField] GameObject door_Obj;
+
     [Header("Panel_Reset")]//패널 초기화
     //타이머
     //주인공 사망 또는 이탈
     [SerializeField] float timer;
     [SerializeField] float reset_time=180f;
+    public Transform resetPoint; // 리셋 좌표
+    [SerializeField] GameObject clear_Line; // 번호 초기화 영역
+    public bool reStart = false;
 
-    public GameObject clear_Obj;
 
     private void Start()
     {
@@ -46,6 +52,13 @@ public class Maze_Mgr : MonoBehaviour
         {
             Check_Answer();
             
+        }
+        if (reStart)//플레이어 위치 초기화 맵 시작점으로
+        {
+            PlayerController.instance.Close_PlayerController();
+            Chapter1_Mgr.instance.player.transform.position = resetPoint.position;
+            PlayerController.instance.Open_PlayerController();
+            reStart = false;
         }
     }
     private void Make_Answer()
@@ -119,7 +132,8 @@ public class Maze_Mgr : MonoBehaviour
         if (clear)
         {
             Debug.Log("탈출 성공");
-            clear_Obj.SetActive(true);
+            Door door = door_Obj.GetComponent<Door>();
+            door.Select_Door();
             maze_Clear = true;
         }
         else
@@ -130,7 +144,7 @@ public class Maze_Mgr : MonoBehaviour
         
 
     }
-    public void Btn_Clear()
+    public void Btn_Clear() //비밀번호 입력값 초기화
     {
         //버튼 초기화
         anw.Clear(); 
@@ -143,5 +157,22 @@ public class Maze_Mgr : MonoBehaviour
 
 
     }
+
+    IEnumerator Button_Timer()//버튼을 3분이상 안누를시 비밀번호 입력값 초기화
+    {
+        timer = 0f; // 타이머 초기화
+
+        while (timer < reset_time)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        Btn_Clear();
+        Make_Answer();
+     
+    }
+
+    
 
 }

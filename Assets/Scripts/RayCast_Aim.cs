@@ -6,12 +6,15 @@ public class RayCast_Aim : MonoBehaviour
     {
         // 커서를 화면 중앙에 고정
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;  // 커서를 보이게 설정
+        Cursor.visible = false;  // 커서를 안보이게 하기
+
     }
     private void Update()
     {
+       
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
         {
+          
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 

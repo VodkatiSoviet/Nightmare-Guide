@@ -9,8 +9,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 {
     [RequireComponent(typeof (CharacterController))]
     [RequireComponent(typeof (AudioSource))]
+
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController instance;
+
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
@@ -47,6 +50,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Use this for initialization
         private void Start()
         {
+            if (instance == null) { instance = this; }
+
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition; // 카메라 로컬 포지션입력
@@ -285,5 +290,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+        public void Open_PlayerController()
+        {
+            m_CharacterController.enabled = true;
+        }
+        public void Close_PlayerController()
+        {
+            m_CharacterController.enabled = false;
+        }
     }
+
+  
+
+
 }
