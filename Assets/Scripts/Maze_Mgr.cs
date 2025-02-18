@@ -44,10 +44,7 @@ public class Maze_Mgr : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            Btn_Clear();
-        }
+        
         if(panel_Check == 4 && !maze_Clear)//답안 체크
         {
             Check_Answer();
@@ -65,7 +62,7 @@ public class Maze_Mgr : MonoBehaviour
     {
         //AnswerKey 생성
         System.Random rand = new System.Random();
-        var randomized = num.OrderBy(item => rand.Next());
+        var randomized = num.OrderBy(item => rand.Next());//배열의 숫자 랜덤 섞기
 
         foreach (var value in randomized)
         {

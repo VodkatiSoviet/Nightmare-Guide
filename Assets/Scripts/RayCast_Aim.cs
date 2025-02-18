@@ -27,6 +27,11 @@ public class RayCast_Aim : MonoBehaviour
                 {
                     Chapter1_Maze(click_object);
                 }
+                if (click_object.CompareTag("Locker"))
+                {
+                    Debug.Log("락커 인식");
+                    DoorCheck(click_object);
+                }
 
                 if (click_object.CompareTag("Door"))
                 {
