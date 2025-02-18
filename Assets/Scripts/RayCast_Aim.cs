@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RayCast_Aim : MonoBehaviour
 {
+    public float maxRayDistance = 1.1f; // 레이 길이 설정
     private void Start()
     {
         // 커서를 화면 중앙에 고정
@@ -14,13 +15,13 @@ public class RayCast_Aim : MonoBehaviour
        
         if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭
         {
-          
+         
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, maxRayDistance))
             {
                 GameObject click_object = hit.transform.gameObject;
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red); // 실제 충돌 지점까지 빨간색
 
                 // 태그가 "maze_Btn"이라면 Select_Btn() 호출
                 if (click_object.CompareTag("maze_Btn"))
@@ -31,6 +32,7 @@ public class RayCast_Aim : MonoBehaviour
                 {
                     Debug.Log("락커 인식");
                     DoorCheck(click_object);
+                    Chapter1_Mgr.instance.aim_Obj.SetActive(true);
                 }
 
                 if (click_object.CompareTag("Door"))
