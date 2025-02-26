@@ -27,8 +27,11 @@ public class Main_Menu_ctrl : MonoBehaviour
             Show_Alert_Page(msg);
         }
     }
+<<<<<<< Updated upstream
     //마우스에 무슨 메소드 쓴거야?
     //버튼이 안눌리잖아
+=======
+>>>>>>> Stashed changes
 
     //메인 메뉴 메소드
     public void Click_Start_Btn()
